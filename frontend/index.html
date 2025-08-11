@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Yaba Games</title>
+    <!-- The stylesheet for the app's appearance -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Google Fonts for typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- ======== 1. LOADING SCREEN ======== -->
+    <div id="loading-screen">
+        <div class="loading-content">
+            <svg class="loading-logo" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M50 5L15.45 27.5V72.5L50 95L84.55 72.5V27.5L50 5Z" stroke="white" stroke-width="3"/>
+                <path d="M50 5L50 95" stroke="white" stroke-width="1.5"/>
+                <path d="M15.45 27.5L84.55 72.5" stroke="white" stroke-width="1.5"/>
+                <path d="M15.45 72.5L84.55 27.5" stroke="white" stroke-width="1.5"/>
+            </svg>
+            <h1 class="brand-name">Yaba Games</h1>
+            <div class="progress-bar-container">
+                <div class="progress-bar-motion"></div>
+            </div>
+            <p class="status-text">Loading...</p>
+        </div>
+    </div>
+
+    <!-- ======== 2. MAIN APP VIEW ======== -->
+    <div id="main-app" class="hidden">
+        <header class="app-header">
+            <div class="user-info">
+                <div class="user-avatar">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path></svg>
+                </div>
+                <div class="user-balance">
+                    💰 <span id="balance-amount">0.00</span>
+                </div>
+            </div>
+
+            <div class="connection-status">
+                <div id="status-indicator" class="disconnected"></div>
+                <span id="status-text">Disconnected</span>
+            </div>
+
+            <div class="header-actions">
+                <button id="new-game-btn" class="action-button new-button">+ NEW</button>
+                <button id="refresh-btn" class="action-button refresh-button">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"></path></svg>
+                </button>
+            </div>
+        </header>
+
+        <div class="filters">
+            <button class="filter-button active" data-filter="all">All</button>
+            <button class="filter-button" data-filter="20-100">💰 20-100</button>
+            <button class="filter-button" data-filter="200-700">💰 200-700</button>
+            <button class="filter-button" data-filter="1000">💰 1000+</button>
+        </div>
+
+        <div id="game-list-container">
+            <!-- Game cards or empty state will be injected here by app.js -->
+        </div>
+    </div>
+
+    <!-- ======== 3. STAKE SELECTION MODAL ======== -->
+    <div id="stake-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Choose Stake</h2>
+                <button id="close-stake-modal-btn" class="close-modal-btn">×</button>
+            </div>
+            <div id="stake-options-grid" class="options-grid">
+                <button class="option-btn" data-stake="20">20 <small>ETB</small></button>
+                <button class="option-btn" data-stake="50">50 <small>ETB</small></button>
+                <button class="option-btn" data-stake="100">100 <small>ETB</small></button>
+                <button class="option-btn" data-stake="200">200 <small>ETB</small></button>
+                <button class="option-btn" data-stake="500">500 <small>ETB</small></button>
+                <button class="option-btn" data-stake="1000">1000 <small>ETB</small></button>
+            </div>
+            <div class="modal-actions">
+                <button id="cancel-stake-btn" class="modal-action-btn cancel">Cancel</button>
+                <button id="next-stake-btn" class="modal-action-btn next" disabled>Next →</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ======== 4. CONFIRMATION MODAL ======== -->
+    <div id="confirm-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Confirm Game</h2>
+                <button id="close-confirm-modal-btn" class="close-modal-btn">×</button>
+            </div>
+            <div class="summary-details">
+                <div class="summary-box">
+                    <label>Win Condition</label>
+                    <span class="summary-icon">🏆</span>
+                    <div id="win-condition-options" class="win-condition-selector">
+                        <button class="win-option-btn" data-win="1">1</button>
+                        <button class="win-option-btn" data-win="2">2</button>
+                        <button class="win-option-btn" data-win="4">4</button>
+                    </div>
+                </div>
+                <div class="summary-box prize-summary">
+                    <label>Winning Prize</label>
+                    <span id="summary-prize-amount">0.00 ETB</span>
+                    <small id="summary-stake-amount">Stake: 0 ETB</small>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button id="cancel-confirm-btn" class="modal-action-btn cancel">Back</button>
+                <button id="create-game-btn" class="modal-action-btn next" disabled>Create Game</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Official Telegram Web App script -->
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <!-- Your application's logic with a cache-busting version number -->
+    <script src="app.js?v=1.1.0"></script>
+
+</body>
+</html>
