@@ -1,0 +1,7 @@
+python-telegram-bot[ext]
+fastapi
+uvicorn[standard]
+gunicorn
+asyncpg
+requests
+python-dotenv
