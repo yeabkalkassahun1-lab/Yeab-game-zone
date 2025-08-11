@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=postgresql://user:password@db:5432/yeabgamedb
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - CHAPA_API_KEY=${CHAPA_API_KEY}
+      - WEBHOOK_URL=${WEBHOOK_URL}
+      - ADMIN_TELEGRAM_ID=${ADMIN_TELEGRAM_ID}
+    volumes:
+      - ..:/workspace:cached
+    command: sleep infinity
+
+  db:
+    image: postgres:14
+    environment:
+      POSTGRES_DB: yeabgamedb
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    ports:
+      - "5432:5432"
+
+volumes:
+  postgres_data:
